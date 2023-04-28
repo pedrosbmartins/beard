@@ -1,0 +1,25 @@
+{
+  "name": "boolean-diagrams",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"yarn:tsc:watch\" \"yarn:browserify:watch\" \"live-server --watch=build/bundle.js\"",
+    "tsc:watch": "tsc -w",
+    "browserify": "browserify -t browserify-css --s booleanDiagrams build/main.js -o build/bundle.js",
+    "browserify:watch": "watchify -t browserify-css --s booleanDiagrams build/main.js -o build/bundle.js -v"
+  },
+  "devDependencies": {
+    "@types/d3-graphviz": "^2.6.7",
+    "browserify": "^17.0.0",
+    "browserify-css": "^0.15.0",
+    "concurrently": "^7.6.0",
+    "tsc": "^2.0.4",
+    "typescript": "^4.9.4",
+    "watchify": "^4.0.0"
+  },
+  "dependencies": {
+    "@types/viz.js": "^2.1.2",
+    "svg-pan-zoom": "^3.6.1",
+    "viz.js": "^2.1.2"
+  }
+}
