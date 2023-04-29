@@ -18,11 +18,7 @@ export function generateDiagram(expression: string, variant: Variant) {
 
   const bdd = createBddFromTruthTable(truthTable)
 
-  if (variant === 'tree') {
-    bdd.minimize({ skipInternalNodeEliminationRule: true })
-  } else if (variant === 'diagram') {
-    bdd.minimize()
-  }
+  if (variant !== 'full') bdd.minimize(false, variant === 'tree')
 
   let content = `digraph G {
   splines=curved
@@ -113,7 +109,7 @@ export function renderViz(expression: string, variant: Variant) {
         })
         svgControl.zoom(0.75)
       }
-      toggleExpressionDisplay(false, exprInput.value)
+      toggleExpressionDisplay(false, currentExpression)
       if (variant) {
         selectVariation(variant)
       }

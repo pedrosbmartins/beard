@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently \"yarn:tsc:watch\" \"yarn:browserify:watch\" \"live-server --watch=build/bundle.js\"",
+    "dev": "concurrently \"yarn:tsc:watch\" \"yarn:js:watch\" \"live-server --watch=build/bundle.js,./index.html,./**/*.css\"",
     "tsc:watch": "tsc -w",
-    "browserify": "browserify -t browserify-css --s booleanDiagrams build/main.js -o build/bundle.js",
-    "browserify:watch": "watchify -t browserify-css --s booleanDiagrams build/main.js -o build/bundle.js -v"
+    "js:watch": "watchify -t browserify-css --s beard build/main.js -o build/bundle.js -v",
+    "build": "browserify -t browserify-css --s beard build/main.js -o build/bundle.js | uglifyjs -mc warnings=false > dist/beard.min.js"
   },
   "devDependencies": {
     "@types/d3-graphviz": "^2.6.7",
     "browserify": "^17.0.0",
     "browserify-css": "^0.15.0",
     "concurrently": "^7.6.0",
+    "live-server": "1.2.1",
     "tsc": "^2.0.4",
     "typescript": "^4.9.4",
     "watchify": "^4.0.0"
