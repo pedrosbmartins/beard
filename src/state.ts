@@ -1,7 +1,7 @@
 import { Theme } from './themes'
 import { Variant } from './variants'
 
-interface State {
+export interface State {
   expression: string
   variant: Variant
   theme: Theme

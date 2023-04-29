@@ -4,8 +4,8 @@ import { LeafNode } from './binary-decision-diagram/leaf-node'
 import { RootNode } from './binary-decision-diagram/root-node'
 
 import { parseExpression } from './boolcalc/index'
+import { State } from './state'
 import { Theme } from './themes'
-import { Variant } from './variants'
 
 interface DiagramTheme {
   internalNode: { fillColor: string; fontColor: string }
@@ -26,7 +26,7 @@ const themes: { [key in Theme]: DiagramTheme } = {
   }
 }
 
-export function expressionToDiagramDot(expression: string, variant: Variant, themeName: Theme) {
+export function expressionToDiagramDot({ expression, variant, theme: themeName }: State) {
   const theme = themes[themeName]
 
   const truthTable = new Map()

@@ -1,4 +1,4 @@
-import { onSelectVariant } from './main'
+import { onVariantSelect as onVariantSelected } from './main'
 
 export type Variant = 'full' | 'tree' | 'diagram'
 
@@ -9,7 +9,7 @@ const $variants: { [k in Variant]: HTMLElement } = {
 }
 
 Object.entries($variants).forEach(([variant, element]) => {
-  element.addEventListener('click', () => onSelectVariant(variant as Variant))
+  element.addEventListener('click', () => onVariantSelected(variant as Variant))
 })
 
 export function selectVariant(current: Variant) {

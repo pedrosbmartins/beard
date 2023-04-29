@@ -1,4 +1,4 @@
-import { onThemeChange } from './main'
+import { onThemeChanged } from './main'
 
 export type Theme = 'dark' | 'light'
 
@@ -8,7 +8,7 @@ const $themeSelector = document.getElementById('theme-selector')!
 $themeSelector.addEventListener('click', () => {
   const theme = $appRoot.classList.contains('theme-light') ? 'dark' : 'light'
   selectTheme(theme)
-  onThemeChange(theme)
+  onThemeChanged(theme)
 })
 
 function selectTheme(theme: Theme) {

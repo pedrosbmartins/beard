@@ -1,10 +1,10 @@
-import { onExpressionChange } from './main'
+import { onExpressionChanged } from './main'
 
 const $exprInput = document.querySelector<HTMLInputElement>('#expression input')!
 $exprInput.addEventListener('focusout', () => toggleExpressionDisplay(false, $exprInput.value))
 $exprInput.addEventListener('change', (event: Event) => {
   const expression = (event.target as HTMLInputElement).value
-  onExpressionChange(expression)
+  onExpressionChanged(expression)
 })
 
 const $exprContent = document.querySelector<HTMLSpanElement>('#expression .content')!
