@@ -1,4 +1,4 @@
-import { BooleanParser } from './parser/boolean.js'
+import { BooleanParser } from './parser/boolean'
 
 /**
  * Pad a string with '0' characters until it is a specified length

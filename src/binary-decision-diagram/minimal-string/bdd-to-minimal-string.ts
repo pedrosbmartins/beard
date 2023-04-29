@@ -1,7 +1,11 @@
-import { AbstractNode } from '../abstract-node.js'
-import { RootNode } from '../root-node.js'
-import { FIRST_CHAR_CODE_FOR_ID } from './string-format.js'
-import { getCharOfLevel, getCharOfValue, getNextCharId } from './string-format.js'
+import { AbstractNode } from '../abstract-node'
+import { RootNode } from '../root-node'
+import {
+  FIRST_CHAR_CODE_FOR_ID,
+  getCharOfLevel,
+  getCharOfValue,
+  getNextCharId
+} from './string-format'
 
 export function bddToMinimalString(bdd: RootNode): string {
   let ret = ''

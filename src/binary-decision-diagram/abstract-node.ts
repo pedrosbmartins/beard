@@ -1,10 +1,10 @@
-import { Branches } from './branches.js'
-import { findSimilarNode } from './find-similar-node.js'
-import { InternalNode } from './internal-node.js'
-import { LeafNode } from './leaf-node.js'
-import { RootNode } from './root-node.js'
-import type { NodeType, NonLeafNode, NonRootNode } from './types.js'
-import { nextNodeId } from './util.js'
+import { Branches } from './branches'
+import { findSimilarNode } from './find-similar-node'
+import { InternalNode } from './internal-node'
+import { LeafNode } from './leaf-node'
+import { RootNode } from './root-node'
+import type { NodeType, NonLeafNode, NonRootNode } from './types'
+import { nextNodeId } from './util'
 
 export class AbstractNode {
   readonly id: string = nextNodeId()

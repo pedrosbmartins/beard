@@ -1,6 +1,6 @@
-import { InternalNode } from './internal-node.js'
-import { LeafNode } from './leaf-node.js'
-import { RootNode } from './root-node.js'
+import { InternalNode } from './internal-node'
+import { LeafNode } from './leaf-node'
+import { RootNode } from './root-node'
 
 export type NodeType = 'LeafNode' | 'InternalNode' | 'RootNode'
 

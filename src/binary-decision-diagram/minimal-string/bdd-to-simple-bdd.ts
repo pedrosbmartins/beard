@@ -1,7 +1,7 @@
-import { AbstractNode } from '../abstract-node.js'
-import { InternalNode } from '../internal-node.js'
-import { RootNode } from '../root-node.js'
-import { SimpleBdd } from '../types.js'
+import { AbstractNode } from '../abstract-node'
+import { InternalNode } from '../internal-node'
+import { RootNode } from '../root-node'
+import { SimpleBdd } from '../types'
 
 /**
  * @recursive

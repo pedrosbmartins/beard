@@ -1,4 +1,4 @@
-import { AbstractNode } from './abstract-node.js'
+import { AbstractNode } from './abstract-node'
 
 /**
  * find an simliar node in a list of nodes

@@ -1,6 +1,6 @@
-import { SimpleBdd, SimpleBddLeafNode } from '../types.js'
-import { splitStringToChunks } from '../util.js'
-import { getNumberOfChar } from './string-format.js'
+import { SimpleBdd, SimpleBddLeafNode } from '../types'
+import { splitStringToChunks } from '../util'
+import { getNumberOfChar } from './string-format'
 
 export function minimalStringToSimpleBdd(str: string): SimpleBdd {
   const nodesById: Map<string, SimpleBdd | SimpleBddLeafNode> = new Map()

@@ -1,5 +1,5 @@
-import { AbstractNode } from './abstract-node.js'
-import type { BooleanString, NonLeafNode, NonRootNode } from './types.js'
+import { AbstractNode } from './abstract-node'
+import type { BooleanString, NonLeafNode, NonRootNode } from './types'
 
 /**
  * represents the branches of a single node

@@ -1,8 +1,8 @@
-import { InternalNode } from './internal-node.js'
-import { LeafNode } from './leaf-node.js'
-import { RootNode } from './root-node.js'
-import type { BooleanString, NonLeafNode, TruthTable } from './types.js'
-import { lastChar } from './util.js'
+import { InternalNode } from './internal-node'
+import { LeafNode } from './leaf-node'
+import { RootNode } from './root-node'
+import type { BooleanString, NonLeafNode, TruthTable } from './types'
+import { lastChar } from './util'
 
 export function createBddFromTruthTable(truthTable: TruthTable): RootNode {
   const root = new RootNode()
