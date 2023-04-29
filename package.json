@@ -7,7 +7,7 @@
     "dev": "concurrently \"yarn:tsc:watch\" \"yarn:js:watch\" \"live-server --watch=build/bundle.js,./index.html,./**/*.css\"",
     "tsc:watch": "tsc -w",
     "js:watch": "watchify --s beard build/main.js -o build/bundle.js",
-    "build": "browserify --s beard build/main.js | uglifyjs -c -m -o dist/beard.min.js"
+    "build": "browserify --s beard build/main.js | uglifyjs -c -m -o dist/beard.min.js && ./bin/build-html"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
