@@ -30,6 +30,7 @@ export function generateDiagram(expression: string, variant: Variant) {
   bgcolor="transparent"\n`
 
   const colors = ['#ffffff', '#ffffff', '#ffffff', '#ffffff']
+  // const colors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff']
   const colorCount = colors.length
 
   function color(index: number) {
