@@ -21,17 +21,38 @@ body {
   display: flex;
   height: 50px;
   padding: 10px 20px;
+  position: relative;
+}
+
+#header .left,
+#header .right {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+#header .right {
+  justify-content: flex-end;
 }
 
 #logo {
+  align-items: center;
+  display: flex;
   opacity: 0.75;
 }
 
+.header-icon {
+  width: 30px;
+  height: 30px;
+}
+
 #expression {
-  flex: 1;
+  align-items: center;
+  display: flex;
   font-size: 1.25rem;
-  margin: 0 15px;
+  justify-content: center;
   text-align: center;
+  flex: 1;
 }
 
 #expression .hide {
@@ -42,23 +63,60 @@ body {
   color: #f1f1f1;
   cursor: default;
   display: inline-block;
-  padding: 5px 10px;
-  width: 100%;
+  flex: 1;
 }
 
 #expression input {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: transparent;
   border: 0;
   border-radius: 5px;
+  box-sizing: border-box;
   color: #949499;
+  flex: 1;
   outline: 0;
   padding: 5px 10px;
   text-align: center;
-  width: 100%;
 }
 
-#expression input:focus {
-  border: 1px solid #212131;
+#variant-selector {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  min-width: 200px;
+  margin: 0 30px 0 15px;
+}
+
+#variant-selector .item {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.048);
+  border: 1px solid #00000045;
+  display: flex;
+  color: #eee;
+  cursor: pointer;
+  height: 100%;
+  flex: 1;
+  padding: 5px 10px;
+  text-align: center;
+}
+#variant-selector .item:first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#variant-selector .item:last-of-type {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#variant-selector .item.active {
+  background: rgba(0, 0, 0, 0.435);
+  padding: 5px 10px;
+}
+#variant-selector .item:not(.active):hover {
+  background: rgba(0, 0, 0, 0.205);
+}
+
+#variant-selector .item span {
+  width: 100%;
 }
 
 #diagram-container {

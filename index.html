@@ -8,23 +8,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
     <link href="./assets/css/normalize.css" rel="stylesheet" />
     <link href="./assets/css/main.css" rel="stylesheet" />
-    <title>boolean diagrams</title>
+    <title>Beard - Binary Expressions As Rendered Diagrams</title>
   </head>
   <body>
     <div id="app">
       <div id="header">
-        <div id="logo">
-          <img
-            src="./assets/images/beard.png"
-            width="30"
-            height="30"
-            title="beard - binary expressions as rendered diagrams"
-            alt="logo"
-          />
+        <div class="left">
+          <div id="logo">
+            <img
+              src="./assets/images/beard.png"
+              width="30"
+              height="30"
+              title="beard - binary expressions as rendered diagrams"
+              alt="logo"
+            />
+          </div>
         </div>
         <div id="expression">
           <span>(A+B)*(C+D)</span>
           <input type="text" class="hide" />
+        </div>
+        <div class="right">
+          <div id="variant-selector">
+            <div data-variant="full" class="item"><span>Full</span></div>
+            <div data-variant="tree" class="item"><span>Tree</span></div>
+            <div data-variant="diagram" class="item"><span>Diagram</span></div>
+          </div>
+          <div id="theme-selector" class="header-icon">
+            <img
+              src="./assets/images/light-mode.png"
+              width="30"
+              height="30"
+              title="toggle light mode"
+              alt="light-mode"
+            />
+          </div>
         </div>
       </div>
       <div id="diagram-container"><div id="graphviz"></div></div>

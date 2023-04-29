@@ -80,7 +80,7 @@ export class RootNode extends AbstractNode {
     /**
      * applies the reduction rules to the whole bdd
      */
-    minimize(logState: boolean = false) {
+    minimize(logState: boolean = false, skipInternalNodeEliminationRule: boolean = false) {
         // console.log('minimize(): START ###############');
         let done = false;
         while (!done) {
@@ -120,10 +120,9 @@ export class RootNode extends AbstractNode {
                         const useNode = node as InternalNode;
                         const reductionDone = useNode.applyReductionRule();
                         let eliminationDone = false;
-                        if (!useNode.deleted) {
-                            // not might now be deleted from reduction-rule
-                            eliminationDone = false
-                            eliminationDone = useNode.applyEliminationRule(nodes);
+                        if (!skipInternalNodeEliminationRule && !useNode.deleted) {
+                          // not might now be deleted from reduction-rule
+                          eliminationDone = useNode.applyEliminationRule(nodes);
                         }
                         if (reductionDone || eliminationDone) {
                             successCount++;

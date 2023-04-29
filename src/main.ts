@@ -9,7 +9,7 @@ import { RootNode } from './binary-decision-diagram/root-node'
 import svgPanZoom from 'svg-pan-zoom'
 import { parseExpression } from './boolcalc'
 
-export function generateDiagram(expression: string) {
+export function generateDiagram(expression: string, variant: Variant) {
   const truthTable = new Map()
   const { truthTable: table, variables } = parseExpression(expression)
   table.forEach(row => {
@@ -18,7 +18,11 @@ export function generateDiagram(expression: string) {
 
   const bdd = createBddFromTruthTable(truthTable)
 
-  bdd.minimize()
+  if (variant === 'tree') {
+    bdd.minimize({ skipInternalNodeEliminationRule: true })
+  } else if (variant === 'diagram') {
+    bdd.minimize()
+  }
 
   let content = `digraph G {
   splines=curved
@@ -86,9 +90,17 @@ export function generateDiagram(expression: string) {
 let viz = new Viz({ Module, render })
 let svgControl: SvgPanZoom.Instance | undefined
 
-export function renderViz(expression: string) {
+type Variant = 'full' | 'tree' | 'diagram'
+
+let currentExpression: string = '(A*B) XOR (C*D)'
+let currentVariant: Variant = 'diagram'
+
+export function renderViz(expression: string, variant: Variant) {
+  currentExpression = expression
+  currentVariant = variant
+
   viz
-    .renderString(generateDiagram(expression))
+    .renderString(generateDiagram(expression, variant))
     .then(result => {
       const element = document.getElementById('graphviz')
       if (element) {
@@ -102,6 +114,9 @@ export function renderViz(expression: string) {
         svgControl.zoom(0.75)
       }
       toggleExpressionDisplay(false, exprInput.value)
+      if (variant) {
+        selectVariation(variant)
+      }
     })
     .catch(error => {
       viz = new Viz({ Module, render })
@@ -109,11 +124,11 @@ export function renderViz(expression: string) {
     })
 }
 
-renderViz('(A*B) XOR (C*D)')
+renderViz(currentExpression, currentVariant)
 
 function onExpressionChange(this: HTMLInputElement, event: Event) {
   const expression = (event.target as HTMLInputElement).value
-  renderViz(expression)
+  renderViz(expression, currentVariant)
 }
 
 const exprText = document.querySelector<HTMLSpanElement>('#expression span')!
@@ -124,7 +139,6 @@ exprInput.addEventListener('focusout', () => toggleExpressionDisplay(false, expr
 exprInput.addEventListener('change', onExpressionChange)
 
 function toggleExpressionDisplay(editing: boolean, content?: string) {
-  console.log('toggle', editing)
   if (editing) {
     exprText.classList.add('hide')
     exprInput.classList.remove('hide')
@@ -134,4 +148,24 @@ function toggleExpressionDisplay(editing: boolean, content?: string) {
     exprText.classList.remove('hide')
     exprInput.classList.add('hide')
   }
+}
+
+const variants: { [k in Variant]: HTMLElement } = {
+  full: document.querySelector<HTMLElement>('#variant-selector div[data-variant="full"]')!,
+  tree: document.querySelector<HTMLElement>('#variant-selector div[data-variant="tree"]')!,
+  diagram: document.querySelector<HTMLElement>('#variant-selector div[data-variant="diagram"]')!
+}
+
+Object.entries(variants).forEach(([variant, element]) => {
+  element.addEventListener('click', () => renderViz(currentExpression || '', variant as Variant))
+})
+
+function selectVariation(current: Variant) {
+  Object.keys(variants).forEach(key => {
+    if (key === current) {
+      variants[key].classList.add('active')
+    } else {
+      variants[key as Variant].classList.remove('active')
+    }
+  })
 }
