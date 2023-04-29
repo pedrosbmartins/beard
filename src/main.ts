@@ -125,6 +125,8 @@ export function render(expression: string, variant: any) {
   }
 }
 
+;(window as any).render = render
+
 function onExpressionChange(this: HTMLInputElement, event: Event) {
   const expression = (event.target as HTMLInputElement).value
   render(expression, currentVariant)
