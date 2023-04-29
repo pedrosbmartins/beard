@@ -45,7 +45,7 @@ export function generateDiagram(
   let content = `digraph G {
   splines=curved
   ordering="out"
-  nodesep="0.1"
+  nodesep="0.2"
   ranksep="0.3"
   fontname="Courier"
   node [margin=0 shape=rect penwidth=0.5 style="rounded,filled" fontsize=12]
