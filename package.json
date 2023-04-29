@@ -4,9 +4,11 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"yarn:tsc:watch\" \"yarn:js:watch\" \"live-server --watch=build/bundle.js,./index.html,./**/*.css\"",
+    "dev": "concurrently \"yarn:tsc:watch\" \"yarn:js:watch\" \"yarn:sass:watch\" \"yarn:serve\"",
     "tsc:watch": "tsc -w",
     "js:watch": "watchify --s beard build/main.js -o build/bundle.js",
+    "sass:watch": "sass --watch assets/scss/main.scss assets/css/main.css",
+    "serve": "live-server --watch=build/bundle.js,./index.html,./assets/css/main.css",
     "build": "browserify --s beard build/main.js | uglifyjs -c -m -o dist/beard.min.js && ./bin/build-html"
   },
   "devDependencies": {
@@ -14,6 +16,7 @@
     "browserify-css": "^0.15.0",
     "concurrently": "^7.6.0",
     "live-server": "1.2.1",
+    "sass": "^1.62.1",
     "tsc": "^2.0.4",
     "typescript": "^4.9.4",
     "uglify-js": "^3.17.4",
