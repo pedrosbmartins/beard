@@ -24,31 +24,32 @@ body {
 
 #header {
   align-items: center;
-  background: #1c1c1c;
   display: flex;
   height: 50px;
   padding: 10px 20px;
   position: relative;
 }
-
+.theme-light #header {
+  background-color: #1c1c1c;
+}
+.theme-dark #header {
+  background-color: #1c1c1c;
+}
 #header .left,
 #header .right {
   display: flex;
   flex-grow: 1;
   flex-basis: 0;
 }
-
-.header-icon {
+#header .right {
+  justify-content: flex-end;
+}
+#header .icon {
   width: 30px;
   height: 30px;
 }
-
-.header-button {
+#header .button {
   cursor: pointer;
-}
-
-#header .right {
-  justify-content: flex-end;
 }
 
 #logo {
@@ -71,29 +72,24 @@ body {
   text-align: center;
   flex: 1;
 }
-
 #expression .hide {
   display: none !important;
 }
-
 #expression .content {
   position: relative;
 }
-
 #expression .content span {
   color: #f1f1f1;
   cursor: default;
   display: inline-block;
   flex: 1;
 }
-
 #expression .content .edit-icon {
   position: absolute;
   height: 100%;
   top: -3px;
   right: -20px;
 }
-
 #expression input {
   background-color: transparent;
   border: 0;
@@ -116,51 +112,60 @@ body {
   right: 20px;
   z-index: 100;
 }
-
 #variant-selector .item {
   align-items: center;
-  background: #1c1c1c;
   border: 1px solid #111111;
   box-sizing: border-box;
   display: flex;
-  color: #eee;
   cursor: pointer;
   flex: 1;
   padding: 10px;
   text-align: center;
 }
-
+.theme-light #variant-selector .item {
+  background-color: #fff;
+  color: #222;
+}
+.theme-dark #variant-selector .item {
+  background-color: #1c1c1c;
+  color: #555;
+}
 #variant-selector .item:first-of-type {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-
 #variant-selector .item:last-of-type {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-
-#variant-selector .item.active {
-  background: #fff;
-  color: #222;
+.theme-light #variant-selector .item.active {
+  background-color: #1c1c1c;
+  color: #eee;
 }
-
+.theme-dark #variant-selector .item.active {
+  background-color: #272727;
+  color: #aaa;
+}
 #variant-selector .item span {
   width: 100%;
 }
 
 #diagram-container {
-  background-color: #f1f1f1;
   display: flex;
   flex: 1;
   position: relative;
+}
+.theme-light #diagram-container {
+  background-color: #f1f1f1;
+}
+.theme-dark #diagram-container {
+  background-color: #272727;
 }
 
 #graphviz {
   flex: 1;
   position: relative;
 }
-
 #graphviz svg {
   position: absolute;
   top: 0;

@@ -8,7 +8,30 @@ import { RootNode } from './binary-decision-diagram/root-node.js'
 import svgPanZoom from 'svg-pan-zoom'
 import { parseExpression } from './boolcalc/index.js'
 
-export function generateDiagram(expression: string, variant: Variant) {
+type Theme = 'dark' | 'light'
+interface DiagramTheme {
+  internalNode: { fillColor: string; fontColor: string }
+  leafNode: { fillColor: string; fontColor: string }
+  edge: { color: string }
+}
+const themes: { [key in Theme]: DiagramTheme } = {
+  light: {
+    internalNode: { fillColor: '#ffffff', fontColor: '#222222' },
+    leafNode: { fillColor: '#dddddd', fontColor: '#222222' },
+    edge: { color: '#222222' }
+  },
+  dark: {
+    internalNode: { fillColor: '#222222', fontColor: '#cccccc' },
+    leafNode: { fillColor: '#111111', fontColor: '#555555' },
+    edge: { color: '#111111' }
+  }
+}
+
+export function generateDiagram(
+  expression: string,
+  variant: Variant,
+  theme: DiagramTheme = themes.light
+) {
   const truthTable = new Map()
   const { truthTable: table, variables } = parseExpression(expression)
   table.forEach(row => {
@@ -25,17 +48,9 @@ export function generateDiagram(expression: string, variant: Variant) {
   nodesep="0.1"
   ranksep="0.3"
   fontname="Courier"
-  node [margin=0 shape=rect penwidth=0.5 fillcolor="#ffffff" style="rounded,filled" fontcolor="#222222" fontsize=12]
-  edge [arrowsize=0.25 penwidth=0.75 color="#222222"]
+  node [margin=0 shape=rect penwidth=0.5 style="rounded,filled" fontsize=12]
+  edge [arrowsize=0.25 penwidth=0.75 color="${theme.edge.color}"]
   bgcolor="transparent"\n`
-
-  const colors = ['#ffffff', '#ffffff', '#ffffff', '#ffffff']
-  // const colors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff']
-  const colorCount = colors.length
-
-  function color(index: number) {
-    return colors[index % colorCount]
-  }
 
   function printNode(node: RootNode | InternalNode) {
     const branches = node.branches
@@ -45,28 +60,35 @@ export function generateDiagram(expression: string, variant: Variant) {
     printBranch(node, right, 'right')
   }
 
+  function printInternalNode(id: string, label: string) {
+    const { fillColor, fontColor } = theme.internalNode
+    return `\t${id} [label="${label}", fillcolor="${fillColor}", fontcolor="${fontColor}, width=0.4, height=0.3"]\n`
+  }
+
+  function printLeafNode(id: string, label: string) {
+    const { fillColor, fontColor } = theme.leafNode
+    return `\t${id} [label="${label}", shape=circle, fontsize=10, fillcolor="${fillColor}", fontcolor="${fontColor}", width=0.3, height=0.3]\n`
+  }
+
+  function printEdge(from: string, to: string, branch: 'left' | 'right') {
+    const style = branch === 'left' ? 'dashed' : 'solid'
+    return `\t${from} -> ${to} [style=${style}]\n`
+  }
+
   function printBranch(
     origin: RootNode | InternalNode,
     node: InternalNode | LeafNode,
     branch: 'left' | 'right'
   ) {
     if (origin.isRootNode()) {
-      content += `\t${origin.id} [label="${variables[origin.level]}", fillcolor="${color(
-        origin.level
-      )}", width=0.4, height=0.3]\n`
+      content += printInternalNode(origin.id, variables[origin.level])
     }
     if (node.isInternalNode()) {
-      content += `\t${node.id} [label="${variables[node.level]}", fillcolor="${color(
-        node.level
-      )}", width=0.4, height=0.3]\n`
-      content += `\t${origin.id} -> ${node.id} [style=${branch === 'left' ? 'dashed' : 'solid'}]\n`
+      content += printInternalNode(node.id, variables[node.level])
+      content += printEdge(origin.id, node.id, branch)
     } else {
-      content += `\t${origin.id + node.id} [label="${
-        node.asLeafNode().value
-      }", shape=circle, fontsize=10, fillcolor="#dddddd", fontcolor="#222222", width=0.3, height=0.3]\n`
-      content += `\t${origin.id} -> ${origin.id + node.id} [style=${
-        branch === 'left' ? 'dashed' : 'solid'
-      }]\n`
+      content += printLeafNode(origin.id + node.id, node.asLeafNode().value.toString())
+      content += printEdge(origin.id, origin.id + node.id, branch)
     }
   }
 
@@ -88,15 +110,15 @@ type Variant = 'full' | 'tree' | 'diagram'
 let graphviz: any = undefined
 Graphviz.load().then((instance: any) => {
   graphviz = instance
-  render(currentExpression, currentVariant)
+  initialize('A XOR B XOR C', 'diagram', 'light')
 })
 
 let svgControl: SvgPanZoom.Instance | undefined
 
-let currentExpression: string = 'A XOR B XOR C'
+let currentExpression: string = ''
 let currentVariant: Variant = 'diagram'
 
-export function render(expression: string, variant: any) {
+export function render(expression: string, variant: Variant, theme: Theme = 'dark') {
   if (!graphviz) {
     console.warn('graphviz not loaded')
     return
@@ -106,7 +128,7 @@ export function render(expression: string, variant: any) {
     return
   }
   currentExpression = expression
-  const dot = generateDiagram(expression, variant)
+  const dot = generateDiagram(expression, variant, themes[theme])
   const svg = graphviz.dot(dot)
   const element = document.getElementById('graphviz')
   if (element) {
@@ -170,4 +192,32 @@ function selectVariation(current: Variant) {
       variants[key as Variant].classList.remove('active')
     }
   })
+}
+
+const appRoot = document.getElementById('app')!
+
+const themeSelector = document.getElementById('theme-selector')!
+themeSelector.addEventListener('click', () => {
+  if (appRoot.classList.contains('theme-light')) {
+    setTheme('dark')
+  } else {
+    setTheme('light')
+  }
+})
+
+function setTheme(theme: Theme) {
+  if (theme === 'dark') {
+    appRoot.classList.remove('theme-light')
+    appRoot.classList.add('theme-dark')
+    render(currentExpression, currentVariant, 'dark')
+  } else {
+    appRoot.classList.remove('theme-dark')
+    appRoot.classList.add('theme-light')
+    render(currentExpression, currentVariant, 'light')
+  }
+}
+
+export function initialize(expression: string, variant: Variant, theme: Theme) {
+  setTheme(theme)
+  render(expression, variant, theme)
 }

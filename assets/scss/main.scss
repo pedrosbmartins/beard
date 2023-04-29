@@ -1,4 +1,5 @@
-@use 'fonts';
+@import 'fonts';
+@import 'themes';
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -17,32 +18,34 @@ body {
 }
 
 #header {
+  @include themify($themes) {
+    background-color: themed('headerColor');
+  }
+
   align-items: center;
-  background: #1c1c1c;
   display: flex;
   height: 50px;
   padding: 10px 20px;
   position: relative;
-}
 
-#header .left,
-#header .right {
-  display: flex;
-  flex-grow: 1;
-  flex-basis: 0;
-}
+  .left,
+  .right {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+  .right {
+    justify-content: flex-end;
+  }
 
-.header-icon {
-  width: 30px;
-  height: 30px;
-}
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
 
-.header-button {
-  cursor: pointer;
-}
-
-#header .right {
-  justify-content: flex-end;
+  .button {
+    cursor: pointer;
+  }
 }
 
 #logo {
@@ -64,40 +67,40 @@ body {
   justify-content: center;
   text-align: center;
   flex: 1;
-}
 
-#expression .hide {
-  display: none !important;
-}
+  .hide {
+    display: none !important;
+  }
 
-#expression .content {
-  position: relative;
-}
+  .content {
+    position: relative;
+  }
 
-#expression .content span {
-  color: #f1f1f1;
-  cursor: default;
-  display: inline-block;
-  flex: 1;
-}
+  .content span {
+    color: #f1f1f1;
+    cursor: default;
+    display: inline-block;
+    flex: 1;
+  }
 
-#expression .content .edit-icon {
-  position: absolute;
-  height: 100%;
-  top: -3px;
-  right: -20px;
-}
+  .content .edit-icon {
+    position: absolute;
+    height: 100%;
+    top: -3px;
+    right: -20px;
+  }
 
-#expression input {
-  background-color: transparent;
-  border: 0;
-  border-radius: 5px;
-  box-sizing: border-box;
-  color: #999;
-  flex: 1;
-  outline: 0;
-  padding: 5px 10px;
-  text-align: center;
+  input {
+    background-color: transparent;
+    border: 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #999;
+    flex: 1;
+    outline: 0;
+    padding: 5px 10px;
+    text-align: center;
+  }
 }
 
 #variant-selector {
@@ -109,39 +112,49 @@ body {
   top: 25px;
   right: 20px;
   z-index: 100;
-}
 
-#variant-selector .item {
-  align-items: center;
-  background: #1c1c1c;
-  border: 1px solid #111111;
-  box-sizing: border-box;
-  display: flex;
-  color: #eee;
-  cursor: pointer;
-  flex: 1;
-  padding: 10px;
-  text-align: center;
-}
-#variant-selector .item:first-of-type {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-#variant-selector .item:last-of-type {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-#variant-selector .item.active {
-  background: #fff;
-  color: #222;
-}
+  .item {
+    @include themify($themes) {
+      background-color: themed('variantSelectorBackground');
+      color: themed('variantSelectorColor');
+    }
 
-#variant-selector .item span {
-  width: 100%;
+    align-items: center;
+    border: 1px solid #111111;
+    box-sizing: border-box;
+    display: flex;
+    cursor: pointer;
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+
+    &:first-of-type {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    &:last-of-type {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &.active {
+      @include themify($themes) {
+        background-color: themed('variantSelectorActiveBackground');
+        color: themed('variantSelectorActiveColor');
+      }
+    }
+
+    span {
+      width: 100%;
+    }
+  }
 }
 
 #diagram-container {
-  background-color: #f1f1f1;
+  @include themify($themes) {
+    background-color: themed('backgroundColor');
+  }
   display: flex;
   flex: 1;
   position: relative;
@@ -150,14 +163,14 @@ body {
 #graphviz {
   flex: 1;
   position: relative;
-}
 
-#graphviz svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 @media only screen and (max-width: 600px) {
