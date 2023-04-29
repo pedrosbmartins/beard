@@ -14,27 +14,30 @@
     <div id="app">
       <div id="header">
         <div class="left">
-          <div id="logo">
+          <div id="logo" class="header-icon">
             <img
               src="./assets/images/beard.png"
-              width="30"
-              height="30"
+              width="40"
+              height="40"
               title="beard - binary expressions as rendered diagrams"
               alt="logo"
             />
           </div>
         </div>
         <div id="expression">
-          <span></span>
+          <div class="content">
+            <span>Expression</span>
+            <div class="edit-icon">
+              <img src="./assets/images/edit.png" width="12px" height="12px" alt="editable" />
+            </div>
+          </div>
           <input type="text" class="hide" />
         </div>
         <div class="right">
-          <div id="variant-selector">
-            <div data-variant="full" class="item"><span>Full</span></div>
-            <div data-variant="tree" class="item"><span>Tree</span></div>
-            <div data-variant="diagram" class="item"><span>Diagram</span></div>
+          <div id="info-button" class="header-icon header-button">
+            <img src="./assets/images/info.png" width="20" height="20" alt="info" />
           </div>
-          <div id="theme-selector" class="header-icon">
+          <div id="theme-selector" class="header-icon header-button">
             <img
               src="./assets/images/light-mode.png"
               width="30"
@@ -45,7 +48,14 @@
           </div>
         </div>
       </div>
-      <div id="diagram-container"><div id="graphviz"></div></div>
+      <div id="diagram-container">
+        <div id="variant-selector">
+          <div data-variant="full" class="item"><span>Full</span></div>
+          <div data-variant="tree" class="item"><span>Tree</span></div>
+          <div data-variant="diagram" class="item"><span>Diagram</span></div>
+        </div>
+        <div id="graphviz"></div>
+      </div>
       <div id="footer"></div>
     </div>
     <script src="build/bundle.js" type="application/javascript"></script>

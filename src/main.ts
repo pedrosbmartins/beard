@@ -25,11 +25,11 @@ export function generateDiagram(expression: string, variant: Variant) {
   nodesep="0.1"
   ranksep="0.3"
   fontname="Courier"
-  node [margin=0 shape=rect penwidth=0 fillcolor="#373749" style="rounded,filled" fontcolor="#ffffff"]
-  edge [arrowsize=0.5 penwidth=0.75 color="#494966"]
+  node [margin=0 shape=rect penwidth=0.5 fillcolor="#ffffff" style="rounded,filled" fontcolor="#222222" fontsize=12]
+  edge [arrowsize=0.25 penwidth=0.75 color="#222222"]
   bgcolor="transparent"\n`
 
-  const colors = ['#29B2CC', '#178EFC', '#F17C10', '#EC0C55']
+  const colors = ['#ffffff', '#ffffff', '#ffffff', '#ffffff']
   const colorCount = colors.length
 
   function color(index: number) {
@@ -52,17 +52,17 @@ export function generateDiagram(expression: string, variant: Variant) {
     if (origin.isRootNode()) {
       content += `\t${origin.id} [label="${variables[origin.level]}", fillcolor="${color(
         origin.level
-      )}", width=0.6, height=0.4]\n`
+      )}", width=0.4, height=0.3]\n`
     }
     if (node.isInternalNode()) {
       content += `\t${node.id} [label="${variables[node.level]}", fillcolor="${color(
         node.level
-      )}", width=0.6, height=0.4]\n`
+      )}", width=0.4, height=0.3]\n`
       content += `\t${origin.id} -> ${node.id} [style=${branch === 'left' ? 'dashed' : 'solid'}]\n`
     } else {
       content += `\t${origin.id + node.id} [label="${
         node.asLeafNode().value
-      }", shape=circle, fontsize=10, fontcolor="#999999", width=0.3, height=0.3]\n`
+      }", shape=circle, fontsize=10, fillcolor="#dddddd", fontcolor="#222222", width=0.3, height=0.3]\n`
       content += `\t${origin.id} -> ${origin.id + node.id} [style=${
         branch === 'left' ? 'dashed' : 'solid'
       }]\n`
@@ -82,44 +82,56 @@ export function generateDiagram(expression: string, variant: Variant) {
   return content
 }
 
-let svgControl: SvgPanZoom.Instance | undefined
-
 type Variant = 'full' | 'tree' | 'diagram'
 
-let currentExpression: string = '(A*B) XOR (C*D)'
+let graphviz: any = undefined
+Graphviz.load().then((instance: any) => {
+  graphviz = instance
+  render(currentExpression, currentVariant)
+})
+
+let svgControl: SvgPanZoom.Instance | undefined
+
+let currentExpression: string = 'A XOR B XOR C'
 let currentVariant: Variant = 'diagram'
 
-export function renderViz(expression: string, variant: any) {
-  Graphviz.load().then((graphviz: any) => {
-    const dot = generateDiagram(expression, variant)
-    const svg = graphviz.dot(dot)
-    const element = document.getElementById('graphviz')
-    if (element) {
-      element.innerHTML = svg
-      svgControl = svgPanZoom('#graphviz svg', {
-        zoomEnabled: true,
-        controlIconsEnabled: false,
-        zoomScaleSensitivity: 0.5,
-        minZoom: 0.25
-      })
-      svgControl.zoom(0.75)
-    }
-    toggleExpressionDisplay(false, currentExpression)
-    if (variant) {
-      selectVariation(variant)
-    }
-  })
+export function render(expression: string, variant: any) {
+  if (!graphviz) {
+    console.warn('graphviz not loaded')
+    return
+  }
+  if (expression === '') {
+    console.warn('expression is empty')
+    return
+  }
+  currentExpression = expression
+  const dot = generateDiagram(expression, variant)
+  const svg = graphviz.dot(dot)
+  const element = document.getElementById('graphviz')
+  if (element) {
+    element.innerHTML = svg
+    svgControl = svgPanZoom('#graphviz svg', {
+      zoomEnabled: true,
+      controlIconsEnabled: false,
+      zoomScaleSensitivity: 0.5,
+      minZoom: 0.25
+    })
+    svgControl.zoom(0.85)
+  }
+  toggleExpressionDisplay(false, currentExpression)
+  if (variant) {
+    selectVariation(variant)
+  }
 }
-
-renderViz(currentExpression, currentVariant)
 
 function onExpressionChange(this: HTMLInputElement, event: Event) {
   const expression = (event.target as HTMLInputElement).value
-  renderViz(expression, currentVariant)
+  render(expression, currentVariant)
 }
 
-const exprText = document.querySelector<HTMLSpanElement>('#expression span')!
-exprText.addEventListener('click', () => toggleExpressionDisplay(true))
+const exprContent = document.querySelector<HTMLSpanElement>('#expression .content')!
+const exprContentText = document.querySelector<HTMLSpanElement>('#expression .content span')!
+exprContent.addEventListener('click', () => toggleExpressionDisplay(true))
 
 const exprInput = document.querySelector<HTMLInputElement>('#expression input')!
 exprInput.addEventListener('focusout', () => toggleExpressionDisplay(false, exprInput.value))
@@ -127,12 +139,12 @@ exprInput.addEventListener('change', onExpressionChange)
 
 function toggleExpressionDisplay(editing: boolean, content?: string) {
   if (editing) {
-    exprText.classList.add('hide')
+    exprContent.classList.add('hide')
     exprInput.classList.remove('hide')
     exprInput.focus()
   } else {
-    if (content) exprText.innerText = content
-    exprText.classList.remove('hide')
+    if (content) exprContentText.innerText = content
+    exprContent.classList.remove('hide')
     exprInput.classList.add('hide')
   }
 }
@@ -144,7 +156,7 @@ const variants: { [k in Variant]: HTMLElement } = {
 }
 
 Object.entries(variants).forEach(([variant, element]) => {
-  element.addEventListener('click', () => renderViz(currentExpression || '', variant as Variant))
+  element.addEventListener('click', () => render(currentExpression || '', variant as Variant))
 })
 
 function selectVariation(current: Variant) {
