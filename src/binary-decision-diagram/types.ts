@@ -1,28 +1,25 @@
-import { LeafNode } from './leaf-node';
-import { InternalNode } from './internal-node';
-import { RootNode } from './root-node';
+import { InternalNode } from './internal-node.js'
+import { LeafNode } from './leaf-node.js'
+import { RootNode } from './root-node.js'
 
-export type NodeType = 'LeafNode' | 'InternalNode' | 'RootNode';
+export type NodeType = 'LeafNode' | 'InternalNode' | 'RootNode'
 
-export type NonLeafNode = InternalNode | RootNode;
-export type NonRootNode = InternalNode | LeafNode;
+export type NonLeafNode = InternalNode | RootNode
+export type NonRootNode = InternalNode | LeafNode
 
 // maps state-set to value
-export type TruthTable = Map<string, number>;
+export type TruthTable = Map<string, number>
 
-export type BooleanString = '0' | '1';
+export type BooleanString = '0' | '1'
 
-export type ResolverFunction<T> = (i: T) => boolean;
+export type ResolverFunction<T> = (i: T) => boolean
 
 export type ResolverFunctions<T = any> = {
-    [k: number]: ResolverFunction<T>;
-};
-
-
-
+  [k: number]: ResolverFunction<T>
+}
 
 // 1 char which is the value
-export type SimpleBddLeafNode = number;
+export type SimpleBddLeafNode = number
 
 /**
  * a simple bdd is a json-representation
@@ -31,7 +28,7 @@ export type SimpleBddLeafNode = number;
  * when resolving values
  */
 export type SimpleBdd = {
-    0: SimpleBdd | SimpleBddLeafNode; // branch-0
-    1: SimpleBdd | SimpleBddLeafNode; // branch-1
-    l: number; // level of the boolean function
-};
+  0: SimpleBdd | SimpleBddLeafNode // branch-0
+  1: SimpleBdd | SimpleBddLeafNode // branch-1
+  l: number // level of the boolean function
+}

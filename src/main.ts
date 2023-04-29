@@ -1,13 +1,12 @@
-import Viz from 'viz.js'
-import { Module, render } from 'viz.js/full.render.js'
+import { Graphviz } from '@hpcc-js/wasm/dist/graphviz.umd'
 
-import { createBddFromTruthTable } from './binary-decision-diagram/create-bdd-from-truth-table'
-import { InternalNode } from './binary-decision-diagram/internal-node'
-import { LeafNode } from './binary-decision-diagram/leaf-node'
-import { RootNode } from './binary-decision-diagram/root-node'
+import { createBddFromTruthTable } from './binary-decision-diagram/create-bdd-from-truth-table.js'
+import { InternalNode } from './binary-decision-diagram/internal-node.js'
+import { LeafNode } from './binary-decision-diagram/leaf-node.js'
+import { RootNode } from './binary-decision-diagram/root-node.js'
 
 import svgPanZoom from 'svg-pan-zoom'
-import { parseExpression } from './boolcalc'
+import { parseExpression } from './boolcalc/index.js'
 
 export function generateDiagram(expression: string, variant: Variant) {
   const truthTable = new Map()
@@ -83,7 +82,6 @@ export function generateDiagram(expression: string, variant: Variant) {
   return content
 }
 
-let viz = new Viz({ Module, render })
 let svgControl: SvgPanZoom.Instance | undefined
 
 type Variant = 'full' | 'tree' | 'diagram'
@@ -91,33 +89,26 @@ type Variant = 'full' | 'tree' | 'diagram'
 let currentExpression: string = '(A*B) XOR (C*D)'
 let currentVariant: Variant = 'diagram'
 
-export function renderViz(expression: string, variant: Variant) {
-  currentExpression = expression
-  currentVariant = variant
-
-  viz
-    .renderString(generateDiagram(expression, variant))
-    .then(result => {
-      const element = document.getElementById('graphviz')
-      if (element) {
-        element.innerHTML = result
-        svgControl = svgPanZoom('#graphviz svg', {
-          zoomEnabled: true,
-          controlIconsEnabled: false,
-          zoomScaleSensitivity: 0.5,
-          minZoom: 0.25
-        })
-        svgControl.zoom(0.75)
-      }
-      toggleExpressionDisplay(false, currentExpression)
-      if (variant) {
-        selectVariation(variant)
-      }
-    })
-    .catch(error => {
-      viz = new Viz({ Module, render })
-      console.error(error)
-    })
+export function renderViz(expression: string, variant: any) {
+  Graphviz.load().then((graphviz: any) => {
+    const dot = generateDiagram(expression, variant)
+    const svg = graphviz.dot(dot)
+    const element = document.getElementById('graphviz')
+    if (element) {
+      element.innerHTML = svg
+      svgControl = svgPanZoom('#graphviz svg', {
+        zoomEnabled: true,
+        controlIconsEnabled: false,
+        zoomScaleSensitivity: 0.5,
+        minZoom: 0.25
+      })
+      svgControl.zoom(0.75)
+    }
+    toggleExpressionDisplay(false, currentExpression)
+    if (variant) {
+      selectVariation(variant)
+    }
+  })
 }
 
 renderViz(currentExpression, currentVariant)

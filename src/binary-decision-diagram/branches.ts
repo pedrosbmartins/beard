@@ -1,88 +1,73 @@
-import type { BooleanString, NonRootNode, NonLeafNode } from './types';
-import { AbstractNode } from './abstract-node';
+import { AbstractNode } from './abstract-node.js'
+import type { BooleanString, NonLeafNode, NonRootNode } from './types.js'
 
 /**
  * represents the branches of a single node
  */
 export class Branches {
-    public deleted: boolean = false;
-    private branches: {
-        [k in BooleanString]: NonRootNode
-    } = {} as any;
+  public deleted: boolean = false
+  private branches: {
+    [k in BooleanString]: NonRootNode
+  } = {} as any
 
-    constructor(
-        private node: NonLeafNode
-    ) { }
+  constructor(private node: NonLeafNode) {}
 
-    public setBranch(which: BooleanString, branchNode: NonRootNode) {
-        const previous = this.branches[which];
-        if (previous === branchNode) {
-            return;
-        }
-
-        // set new branch
-        this.branches[which] = branchNode;
-        branchNode.parents.add(this.node);
+  public setBranch(which: BooleanString, branchNode: NonRootNode) {
+    const previous = this.branches[which]
+    if (previous === branchNode) {
+      return
     }
 
-    public getKeyOfNode(node: NonRootNode): BooleanString {
-        if (this.getBranch('0') === node) {
-            return '0';
-        } else if (this.getBranch('1') === node) {
-            return '1';
-        } else {
-            throw new Error('none matched');
-        }
-    }
+    // set new branch
+    this.branches[which] = branchNode
+    branchNode.parents.add(this.node)
+  }
 
-    public getBranch(which: BooleanString): NonRootNode {
-        return this.branches[which];
+  public getKeyOfNode(node: NonRootNode): BooleanString {
+    if (this.getBranch('0') === node) {
+      return '0'
+    } else if (this.getBranch('1') === node) {
+      return '1'
+    } else {
+      throw new Error('none matched')
     }
+  }
 
-    public getBothBranches(): NonRootNode[] {
-        return [
-            this.getBranch('0'),
-            this.getBranch('1')
-        ];
-    }
+  public getBranch(which: BooleanString): NonRootNode {
+    return this.branches[which]
+  }
 
-    public hasBranchAsNode(node: AbstractNode): boolean {
-        if (
-            this.getBranch('0') === node ||
-            this.getBranch('1') === node
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+  public getBothBranches(): NonRootNode[] {
+    return [this.getBranch('0'), this.getBranch('1')]
+  }
 
-    public hasNodeIdAsBranch(id: string): boolean {
-        if (
-            this.getBranch('0').id === id ||
-            this.getBranch('1').id === id
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+  public hasBranchAsNode(node: AbstractNode): boolean {
+    if (this.getBranch('0') === node || this.getBranch('1') === node) {
+      return true
+    } else {
+      return false
     }
+  }
 
-    public areBranchesStrictEqual() {
-        return this.branches['0'] === this.branches['1'];
+  public hasNodeIdAsBranch(id: string): boolean {
+    if (this.getBranch('0').id === id || this.getBranch('1').id === id) {
+      return true
+    } else {
+      return false
     }
+  }
 
-    public hasEqualBranches() {
-        return JSON.stringify(this.branches['0']) ===
-            JSON.stringify(this.branches['1']);
-    }
+  public areBranchesStrictEqual() {
+    return this.branches['0'] === this.branches['1']
+  }
+
+  public hasEqualBranches() {
+    return JSON.stringify(this.branches['0']) === JSON.stringify(this.branches['1'])
+  }
 }
 
-export function ensureNodesNotStrictEqual(
-    node1: NonRootNode,
-    node2: NonRootNode
-) {
-    if (node1 === node2) {
-        throw new Error('cannot have two strict equal branches');
-    }
+export function ensureNodesNotStrictEqual(node1: NonRootNode, node2: NonRootNode) {
+  if (node1 === node2) {
+    throw new Error('cannot have two strict equal branches')
+  }
 }

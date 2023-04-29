@@ -2,6 +2,7 @@
   "name": "boolean-diagrams",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"yarn:tsc:watch\" \"yarn:js:watch\" \"live-server --watch=build/bundle.js,./index.html,./**/*.css\"",
     "tsc:watch": "tsc -w",
@@ -17,7 +18,7 @@
     "watchify": "^4.0.0"
   },
   "dependencies": {
-    "svg-pan-zoom": "^3.6.1",
-    "viz.js": "^2.1.2"
+    "@hpcc-js/wasm": "^2.12.0",
+    "svg-pan-zoom": "^3.6.1"
   }
 }

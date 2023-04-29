@@ -8,5 +8,6 @@
   "prettier.arrowParens": "avoid",
   "prettier.trailingComma": "none",
   "emmet.showAbbreviationSuggestions": false,
-  "emmet.showExpandedAbbreviation": "never"
+  "emmet.showExpandedAbbreviation": "never",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

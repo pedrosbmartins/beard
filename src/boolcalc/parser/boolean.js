@@ -1,10 +1,10 @@
-import { Parser } from './base';
-import { InvalidInputError } from './exceptions';
-import { Lexer, token_types } from './lexer';
+import { Parser } from './base.js';
+import { InvalidInputError } from './exceptions.js';
+import { Lexer, token_types } from './lexer.js';
 
-import { AndNode, BinaryNode, EquivNode, ImpliesNode, OrNode, ProvidedNode, XOrNode } from '../nodes/binary';
-import { NotNode, UnaryNode } from '../nodes/unary';
-import { ValueNode, VariableNode } from '../nodes/value';
+import { AndNode, BinaryNode, EquivNode, ImpliesNode, OrNode, ProvidedNode, XOrNode } from '../nodes/binary.js';
+import { NotNode, UnaryNode } from '../nodes/unary.js';
+import { ValueNode, VariableNode } from '../nodes/value.js';
 
 /**
  * Parses a boolean expression
