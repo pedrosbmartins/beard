@@ -117,6 +117,7 @@ let svgControl: SvgPanZoom.Instance | undefined
 
 let currentExpression: string = ''
 let currentVariant: Variant = 'diagram'
+let currentTheme: Theme = 'light'
 
 export function render(expression: string, variant: Variant, theme: Theme = 'dark') {
   if (!graphviz) {
@@ -151,7 +152,7 @@ export function render(expression: string, variant: Variant, theme: Theme = 'dar
 
 function onExpressionChange(this: HTMLInputElement, event: Event) {
   const expression = (event.target as HTMLInputElement).value
-  render(expression, currentVariant)
+  render(expression, currentVariant, currentTheme)
 }
 
 const exprContent = document.querySelector<HTMLSpanElement>('#expression .content')!
@@ -181,7 +182,9 @@ const variants: { [k in Variant]: HTMLElement } = {
 }
 
 Object.entries(variants).forEach(([variant, element]) => {
-  element.addEventListener('click', () => render(currentExpression || '', variant as Variant))
+  element.addEventListener('click', () =>
+    render(currentExpression || '', variant as Variant, currentTheme)
+  )
 })
 
 function selectVariation(current: Variant) {
@@ -199,21 +202,20 @@ const appRoot = document.getElementById('app')!
 const themeSelector = document.getElementById('theme-selector')!
 themeSelector.addEventListener('click', () => {
   if (appRoot.classList.contains('theme-light')) {
-    setTheme('dark')
+    initialize(currentExpression, currentVariant, 'dark')
   } else {
-    setTheme('light')
+    initialize(currentExpression, currentVariant, 'light')
   }
 })
 
 function setTheme(theme: Theme) {
+  currentTheme = theme
   if (theme === 'dark') {
     appRoot.classList.remove('theme-light')
     appRoot.classList.add('theme-dark')
-    render(currentExpression, currentVariant, 'dark')
   } else {
     appRoot.classList.remove('theme-dark')
     appRoot.classList.add('theme-light')
-    render(currentExpression, currentVariant, 'light')
   }
 }
 

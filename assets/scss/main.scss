@@ -72,15 +72,15 @@ body {
     display: none !important;
   }
 
-  .content {
-    position: relative;
-  }
-
   .content span {
     color: #f1f1f1;
     cursor: default;
     display: inline-block;
     flex: 1;
+  }
+
+  .content {
+    position: relative;
   }
 
   .content .edit-icon {
@@ -97,6 +97,8 @@ body {
     box-sizing: border-box;
     color: #999;
     flex: 1;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
     outline: 0;
     padding: 5px 10px;
     text-align: center;
