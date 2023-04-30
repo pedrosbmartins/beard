@@ -5,6 +5,7 @@ import { toggleExpressionDisplay } from './expression'
 import { Theme } from './themes'
 import { selectVariant, Variant } from './variants'
 
+import './info'
 import { setState, State, state } from './state'
 import './themes'
 

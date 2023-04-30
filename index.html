@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="./assets/css/main.css" rel="stylesheet" />
-    <title>Beard - Binary Expressions As Rendered Diagrams</title>
+    <title>Beard &ndash; Binary Expressions As Rendered Diagrams</title>
   </head>
   <body>
     <div id="app" class="theme-light">
@@ -51,6 +51,35 @@
           <div data-variant="diagram" class="item"><span>Diagram</span></div>
         </div>
         <div id="graphviz"></div>
+      </div>
+      <div id="info-modal" class="hide">
+        <div class="content">
+          <h2>Beard &ndash; Binary Expressions As Rendered Diagrams</h2>
+          <p>
+            <a href="https://github.com/pedrosbmartins/beard" target="_blank">Project on Github </a>
+          </p>
+          <h3>Expressions</h3>
+          <p>
+            Supported operations are <code>AND</code>, <code>OR</code>, <code>NOT</code>,
+            <code>XOR</code>, <code>IMPLIES</code>, <code>PROVIDED</code> and <code>EQUIV</code>.
+          </p>
+          <p>
+            For more information on valid expressions, please refer to
+            <a href="https://sheabunge.github.io/boolcalc/" target="_blank"
+              >boolcalc by Shea Bunge</a
+            >.
+          </p>
+          <h3>Diagrams</h3>
+          <p>
+            <strong>Nodes</strong> represent binary variables and their
+            <strong>branches</strong> represent variable assignments (solid lines for
+            <strong>1</strong> and dashed lines for <strong>0</strong>).
+          </p>
+          <p>
+            <strong>Leaves</strong> represent the expression result for each possible assignment
+            combination.
+          </p>
+        </div>
       </div>
     </div>
     <script src="build/bundle.js" type="application/javascript"></script>

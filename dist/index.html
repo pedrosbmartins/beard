@@ -3,18 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-    <link href="../assets/css/normalize.css" rel="stylesheet" />
     <link href="../assets/css/main.css" rel="stylesheet" />
-    <title>Beard - Binary Expressions As Rendered Diagrams</title>
+    <title>Beard &ndash; Binary Expressions As Rendered Diagrams</title>
   </head>
   <body>
-    <div id="app">
+    <div id="app" class="theme-light">
       <div id="header">
         <div class="left">
-          <div id="logo" class="header-icon">
+          <div id="logo" class="icon">
             <img
               src="../assets/images/beard.png"
               width="40"
@@ -34,10 +30,10 @@
           <input type="text" class="hide" />
         </div>
         <div class="right">
-          <div id="info-button" class="header-icon header-button">
+          <div id="info-button" class="icon button">
             <img src="../assets/images/info.png" width="20" height="20" alt="info" />
           </div>
-          <div id="theme-selector" class="header-icon header-button">
+          <div id="theme-selector" class="icon button">
             <img
               src="../assets/images/light-mode.png"
               width="30"
@@ -56,7 +52,35 @@
         </div>
         <div id="graphviz"></div>
       </div>
-      <div id="footer"></div>
+      <div id="info-modal" class="hide">
+        <div class="content">
+          <h2>Beard &ndash; Binary Expressions As Rendered Diagrams</h2>
+          <p>
+            <a href="https://github.com/pedrosbmartins/beard" target="_blank">Project on Github </a>
+          </p>
+          <h3>Expressions</h3>
+          <p>
+            Supported operations are <code>AND</code>, <code>OR</code>, <code>NOT</code>,
+            <code>XOR</code>, <code>IMPLIES</code>, <code>PROVIDED</code> and <code>EQUIV</code>.
+          </p>
+          <p>
+            For more information on valid expressions, please refer to
+            <a href="https://sheabunge.github.io/boolcalc/" target="_blank"
+              >boolcalc by Shea Bunge</a
+            >.
+          </p>
+          <h3>Diagrams</h3>
+          <p>
+            <strong>Nodes</strong> represent binary variables and their
+            <strong>branches</strong> represent variable assignments (solid lines for
+            <strong>1</strong> and dashed lines for <strong>0</strong>).
+          </p>
+          <p>
+            <strong>Leaves</strong> represent the expression result for each possible assignment
+            combination.
+          </p>
+        </div>
+      </div>
     </div>
     <script src="beard.min.js" type="application/javascript"></script>
     <script type="application/javascript">

@@ -181,5 +181,34 @@ body {
     zoom: 0.75;
   }
 }
+#info-modal {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+#info-modal.hide {
+  display: none;
+}
+#info-modal .content {
+  border-radius: 5px;
+  color: #bbb;
+  overflow: auto;
+  max-height: 60%;
+  max-width: 70%;
+  padding: 10px 30px;
+}
+.theme-light #info-modal .content {
+  background-color: #1c1c1c;
+}
+.theme-dark #info-modal .content {
+  background-color: #1c1c1c;
+}
 
 /*# sourceMappingURL=main.css.map */
