@@ -26,7 +26,7 @@ body {
   align-items: center;
   display: flex;
   height: 50px;
-  padding: 10px 20px;
+  padding: 0 20px;
   position: relative;
 }
 .theme-light #header {
