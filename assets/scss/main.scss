@@ -7,6 +7,10 @@ body {
   margin: 0;
 }
 
+a {
+  color: inherit;
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -198,15 +202,42 @@ body {
     display: none;
   }
 
+  h2 {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    color: #f1f1f1;
+  }
+
+  .subheading {
+    font-size: 1.25rem;
+    margin-top: 0;
+    opacity: 0.4;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  ul li {
+    display: inline;
+    list-style-type: none;
+  }
+
   .content {
     @include themify($themes) {
       background-color: themed('headerColor');
     }
     border-radius: 5px;
-    color: #bbb;
+    color: #cccccc;
     overflow: auto;
     max-height: 60%;
     max-width: 70%;
     padding: 10px 30px;
+
+    strong {
+      color: #fff;
+    }
   }
 }
