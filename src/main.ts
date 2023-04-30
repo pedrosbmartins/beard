@@ -12,7 +12,10 @@ import './themes'
 let graphviz: any = undefined
 Graphviz.load().then((instance: any) => {
   graphviz = instance
-  window.parent.postMessage('graphvizloaded')
+  window.parent.postMessage({
+    name: 'graphvizloaded',
+    frameId: window.frameElement && window.frameElement.id
+  })
 })
 
 export function render(params: Partial<State>) {
