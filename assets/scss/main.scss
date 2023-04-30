@@ -33,6 +33,7 @@ body {
     display: flex;
     flex-grow: 1;
     flex-basis: 0;
+    max-width: 100px;
   }
   .right {
     justify-content: flex-end;
@@ -63,10 +64,10 @@ body {
 #expression {
   align-items: center;
   display: flex;
+  flex: 1;
   font-size: 1.25rem;
   justify-content: center;
   text-align: center;
-  flex: 1;
 
   .hide {
     display: none !important;
