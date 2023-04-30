@@ -82,7 +82,11 @@
     </div>
     <script src="beard.min.js" type="application/javascript"></script>
     <script type="application/javascript">
-      window.test = 'abc'
+      window.addEventListener('message', event => {
+        if (event.data === 'graphvizloaded') {
+          beard.render({ expression: 'A+B' })
+        }
+      })
     </script>
   </body>
 </html>

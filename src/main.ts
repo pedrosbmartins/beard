@@ -12,27 +12,27 @@ import './themes'
 let graphviz: any = undefined
 Graphviz.load().then((instance: any) => {
   graphviz = instance
-  render({ expression: 'A XOR B XOR C', variant: 'diagram', theme: 'light' })
+  window.parent.postMessage('graphvizloaded')
 })
 
-export function render(state: State) {
+export function render(params: Partial<State>) {
   if (!graphviz) {
     console.warn('graphviz not loaded')
     return
   }
-  if (state.expression === '') {
+  if (params.expression === undefined || params.expression === '') {
     console.warn('expression is empty')
     return
   }
-  setState(state)
+  setState(params)
   renderDiagramSvg(state)
   setupSvgControl()
   toggleExpressionDisplay(false, state.expression)
   selectVariant(state.variant)
 }
 
-function renderDiagramSvg(state: State) {
-  const dot = expressionToDiagramDot(state)
+function renderDiagramSvg(params: State) {
+  const dot = expressionToDiagramDot(params)
   const svg = graphviz.dot(dot)
   const element = document.getElementById('graphviz')!
   element.innerHTML = svg
