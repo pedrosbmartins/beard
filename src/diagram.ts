@@ -26,9 +26,27 @@ const themes: { [key in Theme]: DiagramTheme } = {
   }
 }
 
-export function expressionToDiagramDot({ expression, variant, theme: themeName }: State) {
-  const theme = themes[themeName]
+export function expressionToDiagramDot(state: State) {
+  const theme = themes[state.theme]
 
+  const { diagram, variables } = buildDiagram(state)
+
+  let content = dotHeader(theme)
+
+  diagram.nodesByLevel.forEach(nodes => {
+    nodes.forEach(node => {
+      if (node.isRootNode() || node.isInternalNode()) {
+        content += printNode(node as RootNode | InternalNode, variables, theme)
+      }
+    })
+  })
+
+  content += '}'
+
+  return content
+}
+
+function buildDiagram({ expression, variant }: State) {
   const truthTable = new Map()
   const { truthTable: table, variables } = parseExpression(expression)
   table.forEach(row => {
@@ -39,65 +57,55 @@ export function expressionToDiagramDot({ expression, variant, theme: themeName }
 
   if (variant !== 'full') bdd.minimize(false, variant === 'tree')
 
-  let content = `digraph G {
-  splines=curved
-  ordering="out"
-  nodesep="0.2"
-  ranksep="0.3"
-  fontname="Courier"
-  node [margin=0 shape=rect penwidth=0.5 style="rounded,filled" fontsize=12]
-  edge [arrowsize=0.25 penwidth=0.75 color="${theme.edge.color}"]
-  bgcolor="transparent"\n`
+  return { diagram: bdd, variables }
+}
 
-  function printNode(node: RootNode | InternalNode) {
-    const branches = node.branches
-    const left = branches.getBranch('0')
-    const right = branches.getBranch('1')
-    printBranch(node, left, 'left')
-    printBranch(node, right, 'right')
+function dotHeader(theme: DiagramTheme) {
+  return `
+    digraph G {
+      splines=curved
+      ordering="out"
+      nodesep="0.2"
+      ranksep="0.3"
+      bgcolor="transparent"
+      node [margin=0 shape=rect penwidth=0.5 style="rounded,filled" fontsize=12]
+      edge [arrowsize=0.25 penwidth=0.75 color="${theme.edge.color}"]\n`
+}
+
+function printNode(node: RootNode | InternalNode, variables: string[], theme: DiagramTheme) {
+  const branches = node.branches
+  const nodeDef = printInternalNode(node.id, variables[node.level], theme)
+  const negativeBranch = printBranch(node, branches.getBranch('0'), 'negative', theme)
+  const positiveBranch = printBranch(node, branches.getBranch('1'), 'positive', theme)
+  return nodeDef + negativeBranch + positiveBranch
+}
+
+function printBranch(
+  origin: RootNode | InternalNode,
+  node: InternalNode | LeafNode,
+  branch: 'negative' | 'positive',
+  theme: DiagramTheme
+) {
+  if (node.isInternalNode()) {
+    return printEdge(origin.id, node.id, branch)
+  } else {
+    const nodeDef = printLeafNode(origin.id + node.id, node.asLeafNode().value.toString(), theme)
+    const edgeDef = printEdge(origin.id, origin.id + node.id, branch)
+    return nodeDef + edgeDef
   }
+}
 
-  function printInternalNode(id: string, label: string) {
-    const { fillColor, fontColor } = theme.internalNode
-    return `\t${id} [label="${label}", fillcolor="${fillColor}", fontcolor="${fontColor}, width=0.4, height=0.3"]\n`
-  }
+function printInternalNode(id: string, label: string, theme: DiagramTheme) {
+  const { fillColor, fontColor } = theme.internalNode
+  return `\t${id} [label="${label}", fillcolor="${fillColor}", fontcolor="${fontColor}, width=0.4, height=0.3"]\n`
+}
 
-  function printLeafNode(id: string, label: string) {
-    const { fillColor, fontColor } = theme.leafNode
-    return `\t${id} [label="${label}", shape=circle, fontsize=10, fillcolor="${fillColor}", fontcolor="${fontColor}", width=0.3, height=0.3]\n`
-  }
+function printLeafNode(id: string, label: string, theme: DiagramTheme) {
+  const { fillColor, fontColor } = theme.leafNode
+  return `\t${id} [label="${label}", shape=circle, fontsize=10, fillcolor="${fillColor}", fontcolor="${fontColor}", width=0.3, height=0.3]\n`
+}
 
-  function printEdge(from: string, to: string, branch: 'left' | 'right') {
-    const style = branch === 'left' ? 'dashed' : 'solid'
-    return `\t${from} -> ${to} [style=${style}]\n`
-  }
-
-  function printBranch(
-    origin: RootNode | InternalNode,
-    node: InternalNode | LeafNode,
-    branch: 'left' | 'right'
-  ) {
-    if (origin.isRootNode()) {
-      content += printInternalNode(origin.id, variables[origin.level])
-    }
-    if (node.isInternalNode()) {
-      content += printInternalNode(node.id, variables[node.level])
-      content += printEdge(origin.id, node.id, branch)
-    } else {
-      content += printLeafNode(origin.id + node.id, node.asLeafNode().value.toString())
-      content += printEdge(origin.id, origin.id + node.id, branch)
-    }
-  }
-
-  bdd.nodesByLevel.forEach(nodes => {
-    nodes.forEach(node => {
-      if (node.isRootNode() || node.isInternalNode()) {
-        printNode(node as RootNode | InternalNode)
-      }
-    })
-  })
-
-  content += '}'
-
-  return content
+function printEdge(from: string, to: string, branch: 'negative' | 'positive') {
+  const style = branch === 'negative' ? 'dashed' : 'solid'
+  return `\t${from} -> ${to} [style=${style}]\n`
 }
