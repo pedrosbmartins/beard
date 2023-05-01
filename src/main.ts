@@ -18,11 +18,7 @@ Graphviz.load().then((instance: any) => {
   })
 })
 
-interface Options {
-  hideVariantSelector: boolean
-}
-
-export function render(params: Partial<State>, options: Partial<Options> = {}) {
+export function render(params: Partial<State>) {
   if (!graphviz) {
     console.warn('graphviz not loaded')
     return
@@ -36,7 +32,7 @@ export function render(params: Partial<State>, options: Partial<Options> = {}) {
   setupSvgControl()
   toggleExpressionDisplay(false, state.expression)
   selectVariant(state.variant)
-  if (options.hideVariantSelector) {
+  if (state.options.hideVariantSelector) {
     hideVariantSelector()
   }
 }

@@ -91,7 +91,7 @@
     <script type="application/javascript">
       window.addEventListener('message', event => {
         if (event.data.name === 'graphvizloaded') {
-          beard.render({ expression: 'A+B' })
+          beard.render({ expression: 'A+B', options: { hideVariantSelector: false } })
         }
       })
     </script>
