@@ -1,7 +1,7 @@
 import { Graphviz } from '@hpcc-js/wasm/dist/graphviz.umd'
 import svgPanZoom from 'svg-pan-zoom'
 import { expressionToDiagramDot } from './diagram'
-import { toggleExpressionDisplay } from './expression'
+import { showExpressionContent } from './expression'
 import { Theme } from './themes'
 import { hideVariantSelector, selectVariant, Variant } from './variants'
 
@@ -30,7 +30,7 @@ export function render(params: Partial<State>) {
   setState(params)
   renderDiagramSvg(state)
   setupSvgControl()
-  toggleExpressionDisplay(false, state.expression)
+  showExpressionContent(state.expression)
   selectVariant(state.variant)
   if (state.options.hideVariantSelector) {
     hideVariantSelector()
