@@ -2,10 +2,12 @@ import { onVariantSelect as onVariantSelected } from './main'
 
 export type Variant = 'full' | 'tree' | 'diagram'
 
+const $variantSelector = document.getElementById('variant-selector')!
+
 const $variants: { [k in Variant]: HTMLElement } = {
-  full: document.querySelector<HTMLElement>('#variant-selector div[data-variant="full"]')!,
-  tree: document.querySelector<HTMLElement>('#variant-selector div[data-variant="tree"]')!,
-  diagram: document.querySelector<HTMLElement>('#variant-selector div[data-variant="diagram"]')!
+  full: $variantSelector.querySelector<HTMLElement>('div[data-variant="full"]')!,
+  tree: $variantSelector.querySelector<HTMLElement>('div[data-variant="tree"]')!,
+  diagram: $variantSelector.querySelector<HTMLElement>('div[data-variant="diagram"]')!
 }
 
 Object.entries($variants).forEach(([variant, element]) => {
@@ -20,4 +22,8 @@ export function selectVariant(current: Variant) {
       $variants[key as Variant].classList.remove('active')
     }
   })
+}
+
+export function hideVariantSelector() {
+  $variantSelector.setAttribute('style', 'display: none;')
 }

@@ -3,7 +3,7 @@ import svgPanZoom from 'svg-pan-zoom'
 import { expressionToDiagramDot } from './diagram'
 import { toggleExpressionDisplay } from './expression'
 import { Theme } from './themes'
-import { selectVariant, Variant } from './variants'
+import { hideVariantSelector, selectVariant, Variant } from './variants'
 
 import './info'
 import { setState, State, state } from './state'
@@ -18,7 +18,11 @@ Graphviz.load().then((instance: any) => {
   })
 })
 
-export function render(params: Partial<State>) {
+interface Options {
+  hideVariantSelector: boolean
+}
+
+export function render(params: Partial<State>, options: Partial<Options> = {}) {
   if (!graphviz) {
     console.warn('graphviz not loaded')
     return
@@ -32,6 +36,9 @@ export function render(params: Partial<State>) {
   setupSvgControl()
   toggleExpressionDisplay(false, state.expression)
   selectVariant(state.variant)
+  if (options.hideVariantSelector) {
+    hideVariantSelector()
+  }
 }
 
 function renderDiagramSvg(params: State) {
