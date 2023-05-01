@@ -68,7 +68,7 @@ function dotHeader(theme: DiagramTheme) {
       nodesep="0.2"
       ranksep="0.3"
       bgcolor="transparent"
-      node [margin=0 shape=rect penwidth=0.5 style="rounded,filled" fontsize=12]
+      node [shape=rect penwidth=0.5 style="rounded,filled" fontsize=12 margin=0.05]
       edge [arrowsize=0.25 penwidth=0.75 color="${theme.edge.color}"]\n`
 }
 
@@ -97,12 +97,12 @@ function printBranch(
 
 function printInternalNode(id: string, label: string, theme: DiagramTheme) {
   const { fillColor, fontColor } = theme.internalNode
-  return `\t${id} [label="${label}", fillcolor="${fillColor}", fontcolor="${fontColor}, width=0.4, height=0.3"]\n`
+  return `\t${id} [label="${label}", fillcolor="${fillColor}", fontcolor="${fontColor}"]\n`
 }
 
 function printLeafNode(id: string, label: string, theme: DiagramTheme) {
   const { fillColor, fontColor } = theme.leafNode
-  return `\t${id} [label="${label}", shape=circle, fontsize=10, fillcolor="${fillColor}", fontcolor="${fontColor}", width=0.3, height=0.3]\n`
+  return `\t${id} [label="${label}", shape=circle, fontsize=10, fillcolor="${fillColor}", fontcolor="${fontColor}", width=0.3, height=0.3, margin=0]\n`
 }
 
 function printEdge(from: string, to: string, branch: 'negative' | 'positive') {
