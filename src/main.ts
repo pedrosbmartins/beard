@@ -23,7 +23,7 @@ export function render(params: Partial<State>) {
     console.warn('graphviz not loaded')
     return
   }
-  if (params.expression === undefined || params.expression === '') {
+  if (params.expression === '') {
     console.warn('expression is empty')
     return
   }
