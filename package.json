@@ -12,6 +12,7 @@
     "build": "browserify --s beard build/main.js | uglifyjs -c -m -o dist/beard.min.js && ./bin/build-html"
   },
   "devDependencies": {
+    "@types/hammerjs": "^2.0.41",
     "browserify": "^17.0.0",
     "concurrently": "^7.6.0",
     "live-server": "1.2.1",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "@hpcc-js/wasm": "^2.12.0",
+    "hammerjs": "^2.0.8",
     "svg-pan-zoom": "^3.6.1"
   }
 }

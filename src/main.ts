@@ -1,5 +1,4 @@
 import { Graphviz } from '@hpcc-js/wasm/dist/graphviz.umd'
-import svgPanZoom from 'svg-pan-zoom'
 import { expressionToDiagramDot } from './diagram'
 import { showExpressionContent } from './expression'
 import { Theme } from './themes'
@@ -7,6 +6,7 @@ import { hideVariantSelector, selectVariant, Variant } from './variants'
 
 import './info'
 import { setState, State, state } from './state'
+import { setupSVGControl } from './svgcontrol'
 import './themes'
 
 let graphviz: any = undefined
@@ -28,8 +28,8 @@ export function render(params: Partial<State>) {
     return
   }
   setState(params)
-  renderDiagramSvg(state)
-  setupSvgControl()
+  renderDiagramSVG(state)
+  setupSVGControl()
   showExpressionContent(state.expression)
   selectVariant(state.variant)
   if (state.options.hideVariantSelector) {
@@ -37,21 +37,11 @@ export function render(params: Partial<State>) {
   }
 }
 
-function renderDiagramSvg(params: State) {
+function renderDiagramSVG(params: State) {
   const dot = expressionToDiagramDot(params)
   const svg = graphviz.dot(dot)
   const element = document.getElementById('graphviz')!
   element.innerHTML = svg
-}
-
-function setupSvgControl() {
-  const svgControl = svgPanZoom('#graphviz svg', {
-    zoomEnabled: true,
-    controlIconsEnabled: false,
-    zoomScaleSensitivity: 0.5,
-    minZoom: 0.25
-  })
-  svgControl.zoom(0.85)
 }
 
 export function onExpressionChanged(expression: string) {
