@@ -1,14 +1,16 @@
 import { onExpressionChanged } from './main'
 
 const $exprInput = document.querySelector<HTMLInputElement>('#expression input')!
+const $exprContent = document.querySelector<HTMLSpanElement>('#expression .content')!
+const $exprContentText = document.querySelector<HTMLSpanElement>('#expression .content span')!
+const $graphviz = document.querySelector<HTMLSpanElement>('#graphviz')!
+
 $exprInput.addEventListener('focusout', () => showExpressionContent($exprInput.value))
 $exprInput.addEventListener('change', (event: Event) => {
   const expression = (event.target as HTMLInputElement).value
   onExpressionChanged(expression)
 })
 
-const $exprContent = document.querySelector<HTMLSpanElement>('#expression .content')!
-const $exprContentText = document.querySelector<HTMLSpanElement>('#expression .content span')!
 $exprContent.addEventListener('click', () => showExpressionInput())
 
 export function showExpressionInput() {
@@ -23,3 +25,9 @@ export function showExpressionContent(content: string) {
   $exprContent.classList.remove('hide')
   $exprInput.classList.add('hide')
 }
+
+$graphviz.addEventListener('click', () => {
+  if (!$exprInput.classList.contains('hide')) {
+    onExpressionChanged($exprInput.value)
+  }
+})
