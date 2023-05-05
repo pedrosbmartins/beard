@@ -1,5 +1,5 @@
 import { Graphviz } from '@hpcc-js/wasm/dist/graphviz.umd'
-import { expressionToDiagramDot } from './diagram'
+import { GraphvizDiagram } from './diagram'
 import { showExpressionContent } from './expression'
 import { Theme } from './themes'
 import { hideVariantSelector, selectVariant, Variant } from './variants'
@@ -38,7 +38,7 @@ export function render(params: Partial<State>) {
 }
 
 function renderDiagramSVG(params: State) {
-  const dot = expressionToDiagramDot(params)
+  const { dot } = new GraphvizDiagram(params)
   const svg = graphviz.dot(dot)
   const element = document.getElementById('graphviz')!
   element.innerHTML = svg
