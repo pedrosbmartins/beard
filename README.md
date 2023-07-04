@@ -1,3 +1,3 @@
-# Beard &ndash; Binary Expressions As Rendered Diagrams
+# Beard &ndash; Boolean Expressions As Rendered Diagrams
 
 ...
