@@ -3,7 +3,7 @@ import { InternalNode } from './binary-decision-diagram/internal-node'
 import { LeafNode } from './binary-decision-diagram/leaf-node'
 import { RootNode } from './binary-decision-diagram/root-node'
 
-import { parseExpression } from './boolcalc/index'
+import { BooleanExpression } from './boolean-expression-evaluator/BooleanExpression'
 import { State } from './state'
 import { Theme } from './themes'
 
@@ -33,28 +33,25 @@ export class GraphvizDiagram {
   private diagram: RootNode
   private variables: string[]
 
+  private interpreter = new BooleanExpression()
+
   constructor(private params: State) {
     this.theme = themes[params.theme]
 
     const { diagram, variables } = this.build()
     this.diagram = diagram
-    this.variables = variables
+    this.variables = Array.from(variables)
 
     this.dot = this.toDOT()
   }
 
   private build() {
     const { expression, variant } = this.params
-
-    const truthTable = new Map()
-    const { truthTable: table, variables } = parseExpression(expression)
-    table.forEach(row => {
-      truthTable.set(row.slice(0, variables.length).join(''), row[row.length - 1])
-    })
-
-    const diagram = createBddFromTruthTable(truthTable)
+    const { variables } = this.interpreter.parse(expression)
+    const diagram = createBddFromTruthTable(
+      new Map(Array.from(this.interpreter.truthTable()).map(([b, r]) => [b, r ? 1 : 0]))
+    )
     if (variant !== 'full') diagram.minimize(false, variant === 'tree')
-
     return { diagram, variables }
   }
 
