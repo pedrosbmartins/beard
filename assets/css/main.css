@@ -231,5 +231,8 @@ a {
 #info-modal .content strong {
   color: #fff;
 }
+#info-modal .content p {
+  color: #aaa;
+}
 
 /*# sourceMappingURL=main.css.map */
