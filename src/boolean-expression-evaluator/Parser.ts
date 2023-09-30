@@ -1,5 +1,5 @@
 import * as expr from './Expression'
-import { Token, TokenType } from "./Token"
+import { Token, TokenType } from './Token'
 
 // expression     → term ;
 // term           → factor ( ( "+" ) factor )* ;

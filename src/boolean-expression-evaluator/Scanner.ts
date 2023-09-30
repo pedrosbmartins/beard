@@ -1,8 +1,8 @@
-import { Token, TokenType } from "./Token"
+import { Token, TokenType } from './Token'
 
 export class Scanner {
   public variables: Set<string> = new Set()
-  
+
   private tokens: Token[] = []
   private start: number = 0
   private current: number = 0
@@ -13,7 +13,7 @@ export class Scanner {
     ['xor', TokenType.OPERATOR_XOR],
     ['not', TokenType.OPERATOR_NOT],
     ['true', TokenType.BOOLEAN_TRUE],
-    ['false', TokenType.BOOLEAN_FALSE],
+    ['false', TokenType.BOOLEAN_FALSE]
   ])
 
   constructor(private source: string) {}
@@ -41,9 +41,11 @@ export class Scanner {
         this.addToken(TokenType.OPERATOR_OR)
         break
       case '*':
+      case '·':
         this.addToken(TokenType.OPERATOR_AND)
         break
-      case '¬': case '!':
+      case '¬':
+      case '!':
         this.addToken(TokenType.OPERATOR_NOT)
         break
       case '⊕':

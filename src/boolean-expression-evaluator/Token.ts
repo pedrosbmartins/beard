@@ -11,20 +11,20 @@ export enum TokenType {
   OPERATOR_XOR,
   OPERATOR_NOT,
 
-  EOF,
+  EOF
 }
 
 export class Token {
-  public type: TokenType;
-  public lexeme: string;
+  public type: TokenType
+  public lexeme: string
 
   constructor(type: TokenType, lexeme: string) {
-    this.type = type;
-    this.lexeme = lexeme;
+    this.type = type
+    this.lexeme = lexeme
   }
 
   public toString() {
-    const lexeme = this.lexeme === "" ? "--" : this.lexeme
+    const lexeme = this.lexeme === '' ? '--' : this.lexeme
     return `${TokenType[this.type]} ${lexeme}`
   }
 }
