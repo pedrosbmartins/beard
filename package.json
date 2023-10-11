@@ -9,13 +9,15 @@
     "sass:watch": "sass --watch assets/scss/main.scss assets/css/main.css",
     "serve": "live-server --watch=build/bundle.js,./index.html,./assets/css/main.css",
     "build": "browserify --s beard build/main.js | uglifyjs -c -m -o dist/beard.min.js && ./bin/build-html",
-    "evaluator:console": "ts-node src/boolean-expression-evaluator/console.ts"
+    "evaluator:console": "ts-node src/boolean-expression-evaluator/console.ts",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@types/hammerjs": "^2.0.41",
     "@types/node": "^20.7.0",
     "browserify": "^17.0.0",
     "concurrently": "^7.6.0",
+    "gh-pages": "^6.0.0",
     "live-server": "1.2.1",
     "sass": "^1.62.1",
     "ts-node": "^10.9.1",
