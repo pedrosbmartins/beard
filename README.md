@@ -2,6 +2,10 @@
 
 A simple parser and visualizer for boolean expressions.
 
+Checkout the [online demo](https://pedrosbmartins.github.io/beard/).
+
+![Demo](/assets/demo.png)
+
 ## Operators
 
 These are the currently supported operators, from highest to lowest precedence. Parenthesis `()` can be used to group operations and override precedence.
