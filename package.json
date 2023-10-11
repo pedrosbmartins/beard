@@ -5,12 +5,12 @@
   "scripts": {
     "dev": "concurrently \"yarn:tsc:watch\" \"yarn:js:watch\" \"yarn:sass:watch\" \"yarn:serve\"",
     "tsc:watch": "tsc -w",
-    "js:watch": "watchify --s beard build/main.js -o build/bundle.js",
-    "sass:watch": "sass --watch assets/scss/main.scss assets/css/main.css",
-    "serve": "live-server --watch=build/bundle.js,./index.html,./assets/css/main.css",
-    "build": "browserify --s beard build/main.js | uglifyjs -c -m -o dist/beard.min.js && ./bin/build-html",
+    "js:watch": "watchify --s beard build/main.js -o public/js/bundle.js",
+    "sass:watch": "sass --watch public/assets/scss/main.scss public/assets/css/main.css",
+    "serve": "live-server ./public",
+    "build": "browserify --s beard build/main.js | uglifyjs -c -m -o public/js/bundle.js",
     "evaluator:console": "ts-node src/boolean-expression-evaluator/console.ts",
-    "deploy": "gh-pages -d dist"
+    "deploy": "yarn build && gh-pages -d public"
   },
   "devDependencies": {
     "@types/hammerjs": "^2.0.41",
