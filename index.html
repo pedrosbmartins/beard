@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../assets/css/main.css" rel="stylesheet" />
+    <link href="./assets/css/main.css" rel="stylesheet" />
     <title>Beard &ndash; Boolean Expressions As Rendered Diagrams</title>
   </head>
   <body>
@@ -12,7 +12,7 @@
         <div class="left">
           <div id="logo" class="icon">
             <img
-              src="../assets/images/beard.png"
+              src="./assets/images/beard.png"
               width="30"
               height="30"
               title="beard - boolean expressions as rendered diagrams"
@@ -24,18 +24,18 @@
           <div class="content">
             <span>Expression</span>
             <div class="edit-icon">
-              <img src="../assets/images/edit.png" width="12px" height="12px" alt="editable" />
+              <img src="./assets/images/edit.png" width="12px" height="12px" alt="editable" />
             </div>
           </div>
           <input type="text" class="hide" />
         </div>
         <div class="right">
           <div id="info-button" class="icon button">
-            <img src="../assets/images/info.png" width="20" height="20" alt="info" />
+            <img src="./assets/images/info.png" width="20" height="20" alt="info" />
           </div>
           <div id="theme-selector" class="icon button">
             <img
-              src="../assets/images/light-mode.png"
+              src="./assets/images/light-mode.png"
               width="30"
               height="30"
               title="toggle light mode"
@@ -83,7 +83,7 @@
         </div>
       </div>
     </div>
-    <script src="beard.min.js" type="application/javascript"></script>
+    <script src="./js/bundle.js" type="application/javascript"></script>
     <script type="application/javascript">
       window.addEventListener('message', event => {
         if (event.data.name === 'graphvizloaded') {

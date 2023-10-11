@@ -1,0 +1,238 @@
+/* roboto-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/roboto-v30-latin-regular.woff2") format("woff2"), url("../fonts/roboto-v30-latin-regular.woff") format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 1em;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#header {
+  align-items: center;
+  display: flex;
+  height: 50px;
+  padding: 0 20px;
+  position: relative;
+}
+.theme-light #header {
+  background-color: #1c1c1c;
+}
+.theme-dark #header {
+  background-color: #1c1c1c;
+}
+#header .left,
+#header .right {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
+  max-width: 100px;
+}
+#header .right {
+  justify-content: flex-end;
+}
+#header .icon {
+  width: 30px;
+  height: 30px;
+}
+#header .button {
+  cursor: pointer;
+}
+
+#logo {
+  align-items: center;
+  display: flex;
+  opacity: 0.75;
+}
+
+#info-button {
+  align-items: center;
+  display: flex;
+  margin-right: 10px;
+}
+
+#expression {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  font-size: 1.25rem;
+  justify-content: center;
+  text-align: center;
+}
+#expression .hide {
+  display: none !important;
+}
+#expression .content span {
+  color: #f1f1f1;
+  cursor: default;
+  display: inline-block;
+  flex: 1;
+}
+#expression .content {
+  position: relative;
+}
+#expression .content .edit-icon {
+  position: absolute;
+  height: 100%;
+  top: -3px;
+  right: -20px;
+}
+#expression input {
+  background-color: transparent;
+  border: 0;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #999;
+  flex: 1;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.25rem;
+  outline: 0;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+#variant-selector {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  min-width: 200px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 100;
+}
+#variant-selector .item {
+  align-items: center;
+  border: 1px solid #111111;
+  box-sizing: border-box;
+  display: flex;
+  cursor: pointer;
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+.theme-light #variant-selector .item {
+  background-color: #fff;
+  color: #222;
+}
+.theme-dark #variant-selector .item {
+  background-color: #1c1c1c;
+  color: #555;
+}
+#variant-selector .item:first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#variant-selector .item:last-of-type {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.theme-light #variant-selector .item.active {
+  background-color: #1c1c1c;
+  color: #eee;
+}
+.theme-dark #variant-selector .item.active {
+  background-color: #272727;
+  color: #aaa;
+}
+#variant-selector .item span {
+  width: 100%;
+}
+
+#diagram-container {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+.theme-light #diagram-container {
+  background-color: #f1f1f1;
+}
+.theme-dark #diagram-container {
+  background-color: #272727;
+}
+
+#graphviz {
+  flex: 1;
+  position: relative;
+}
+#graphviz svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#info-modal {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+#info-modal.hide {
+  display: none;
+}
+#info-modal h2 {
+  margin-bottom: 0;
+}
+#info-modal h3 {
+  color: #f1f1f1;
+}
+#info-modal .subheading {
+  font-size: 1.25rem;
+  margin-top: 0;
+  opacity: 0.4;
+}
+#info-modal ul {
+  padding: 0;
+}
+#info-modal ul li {
+  display: inline;
+  list-style-type: none;
+}
+#info-modal .content {
+  border-radius: 5px;
+  color: #cccccc;
+  overflow: auto;
+  max-height: 60%;
+  max-width: 70%;
+  padding: 10px 30px;
+}
+.theme-light #info-modal .content {
+  background-color: #1c1c1c;
+}
+.theme-dark #info-modal .content {
+  background-color: #1c1c1c;
+}
+#info-modal .content strong {
+  color: #fff;
+}
+#info-modal .content p {
+  color: #aaa;
+}
+
+/*# sourceMappingURL=main.css.map */
