@@ -2,7 +2,7 @@
 
 A simple parser and visualizer for boolean expressions.
 
-Checkout the [online demo](https://pedrosbmartins.github.io/beard/).
+Check out the [online demo](https://pedrosbmartins.github.io/beard/).
 
 ![Demo](/assets/demo.png)
 
@@ -27,3 +27,5 @@ All operators and constants are case-insensitive.
 ## Credits
 
 This project uses a modified version of the [binary-decision-diagram](https://github.com/pubkey/binary-decision-diagram) library.
+
+Beard icon created by [Good Ware - Flaticon](https://www.flaticon.com/authors/good-ware).
